@@ -1,15 +1,16 @@
 import {Store} from '../../fluxit';
-import HelloActions from '../actions/HelloActions.jsx';
+import HelloActions from '../actions/CounterActions.jsx';
 
-var x = 1, y = 2;
+var _state = {
+  x: 0,
+  y: 0
+};
 
-const HelloStore = new Store({
-  displayName: 'HelloStore',
+const CounterStore = new Store({
+  displayName: 'CounterStore',
 
   getState() {
-    return {
-      x, y
-    };
+    return _state;
   },
 
   getActionBinds() {
@@ -19,6 +20,8 @@ const HelloStore = new Store({
   },
 
   events: {
+    INC_X: null,
+    INC_Y: null,
     HELLO: null,
     BYE: null
   },
@@ -32,8 +35,9 @@ const HelloStore = new Store({
 
     alert('store: ' + JSON.stringify(payload));
 
+    this.emitChange(this.events.INC_X);
   }
 
 });
 
-export default HelloStore;
+export default CounterStore;

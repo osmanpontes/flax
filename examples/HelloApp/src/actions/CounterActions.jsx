@@ -1,6 +1,6 @@
 import {ActionCreator} from '../../fluxit';
 
-const HelloActions = new ActionCreator({
+const CounterActions = new ActionCreator({
   loadHellos(query) {
     var payload = {
       x: query + 1
@@ -9,6 +9,19 @@ const HelloActions = new ActionCreator({
       data: payload,
       state: 'SUCCESS'
     });
+
+    console.log(this.dispatch());
+    this.f1();
+  },
+
+  f1() {
+    console.log(this.dispatch());
+    this.f2();
+  },
+
+  f2() {
+    console.log(this.dispatch());
+    //this.f1();
   },
 
   sendHello(x) {
@@ -17,4 +30,4 @@ const HelloActions = new ActionCreator({
   }
 });
 
-export default HelloActions;
+export default CounterActions;

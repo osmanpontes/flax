@@ -17,10 +17,14 @@ var ActionCreator = function (spec) {
             func.apply(Object.assign({
               dispatch(payload) {
                 Dispatcher.dispatch({type: funcName, payload});
+                // return funcName;
               }
             }, spec), arguments);
           };
         })(funcName, func);
+
+        // HACK
+        spec[funcName] = this[funcName];
 
         this[funcName].actionType = funcName;
         break;
@@ -28,8 +32,6 @@ var ActionCreator = function (spec) {
         this[propName] = spec[propName];
         break;
     }
-
-
   }
 };
 
