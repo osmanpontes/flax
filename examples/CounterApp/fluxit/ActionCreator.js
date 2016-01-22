@@ -13,13 +13,14 @@ var ActionCreator = function (spec) {
         func = spec[funcName];
 
         this[funcName] = (function (funcName, func) {
+          var scope = Object.assign({
+            dispatch(payload) {
+              // TODO ActionCreator displayName to make funcName belongs to ActionCreator
+              Dispatcher.dispatch({type: funcName, payload});
+            }
+          }, spec);
           return function () {
-            func.apply(Object.assign({
-              dispatch(payload) {
-                Dispatcher.dispatch({type: funcName, payload});
-                // return funcName;
-              }
-            }, spec), arguments);
+            func.apply(scope, arguments);
           };
         })(funcName, func);
 

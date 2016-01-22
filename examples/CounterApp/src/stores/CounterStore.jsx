@@ -34,7 +34,7 @@ const CounterStore = new Store({
   _handleDecX() {
     _state.x = _state.x < 1 ? 0 : _state.x - 1;
 
-    this.emitChange(this.DEC_X);
+    this.emitChange(this.DEC_X.append(2));
     // this.emitChange(this.events.DEC_X);
   }
 });

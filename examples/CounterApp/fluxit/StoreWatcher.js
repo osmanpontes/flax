@@ -1,23 +1,24 @@
 const StoreWatcher = {
-  __binds__: [],
-
-  bind(store, event, handler) {
-    this.__binds__.push({store, event, handler});
-  },
-
   componentDidMount() {
-    this.__binds__.forEach(bind => {
-      var {event, handler} = bind;
-      store.listen(event, handler);
+    var binds = this.getEventBinds();
+
+    binds.forEach(bind => {
+      var event = bind[0];
+      var handler = bind[1];
+      event.store.addChangeListener(event, handler);
     });
   },
 
   componentWillUnmount() {
-    this.__binds__.forEach(bind => {
-      var {event, handler} = bind;
-      store.unlisten(event, handler);
+    var binds = this.getEventBinds();
+
+    binds.forEach(bind => {
+      var event = bind[0];
+      var handler = bind[1];
+
+      event.store.removeChangeListener(event, handler);
     });
   }
 };
 
-module.exports = StoreWatcher;
+export default StoreWatcher;

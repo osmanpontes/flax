@@ -1,6 +1,22 @@
 import Dispatcher from './Dispatcher';
 import FluxitEmitter from './FluxitEmitter';
 
+var _count = 0;
+
+var StoreEvent = function (id, name, store) {
+  this.id = id;
+  this.name = name;
+  this.store = store;
+};
+
+StoreEvent.prototype.toString = function () {
+  return this.id.toString();
+};
+
+StoreEvent.prototype.append = function () {
+  return new StoreEvent(`${this.id}/${Array.from(arguments).join('/')}`, this.name, this.store);
+};
+
 var Store = function (spec) {
   this.displayName = spec.displayName;
 
@@ -9,14 +25,11 @@ var Store = function (spec) {
     if (!spec.events.hasOwnProperty(eventName)) {
       continue;
     }
-    var eventId = `${this.displayName}.${eventName}`;
-    this.events[eventName] = eventId;
-    this[eventName] = eventId;
-  }
+    var event = new StoreEvent(_count++, eventName, this);
 
-  /*
-    this[eventName] = eventName;
-  */
+    this.events[eventName] = event;
+    this[eventName] = event;
+  }
 
   // TODO what happens when someone extends the Store class? Or: how to?
   this.getState = spec.getState;
@@ -39,7 +52,7 @@ var Store = function (spec) {
 
 Store.prototype = new FluxitEmitter();
 
-Store.prototype.waitFor = function(stores) {
+Store.prototype.waitFor = function (stores) {
   var ids = stores.map(store => store.dispatchToken);
   Dispatcher.waitFor(ids);
 };

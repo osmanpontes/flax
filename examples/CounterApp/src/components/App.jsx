@@ -1,13 +1,19 @@
 import React from 'react';
 import CounterActions from '../actions/CounterActions.jsx';
 import CounterStore from '../stores/CounterStore.jsx';
+import {StoreWatcher} from '../../fluxit';
 
 const App = React.createClass({
-  //mixins: [StoreWatch],
+  mixins: [StoreWatcher],
+
+  getEventBinds() {
+    return [
+      [CounterStore.INC_X, this._handleXChange],
+      [CounterStore.DEC_X.append(2), this._handleXChange]
+    ];
+  },
 
   getInitialState() {
-    //this.bind(CounterStore, CounterActions.events.INC_X, this._handleXChange);
-    //this.bind(CounterStore, CounterActions.events.DEC_X, this._handleXChange);
     return {
       x: CounterStore.getState().x
     };
@@ -17,16 +23,6 @@ const App = React.createClass({
     this.setState({
       x: CounterStore.getState().x
     });
-  },
-
-  componentDidMount() {
-    CounterStore.addChangeListener(CounterStore.INC_X, this._handleXChange);
-    CounterStore.addChangeListener(CounterStore.DEC_X, this._handleXChange);
-  },
-
-  componentWillUnmount() {
-    CounterStore.removeChangeListener(CounterStore.INC_X, this._handleXChange);
-    CounterStore.removeChangeListener(CounterStore.DEC_X, this._handleXChange);
   },
 
   _handlePlusClick() {
