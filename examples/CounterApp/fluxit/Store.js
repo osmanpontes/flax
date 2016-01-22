@@ -39,4 +39,11 @@ var Store = function (spec) {
 
 Store.prototype = new FluxitEmitter();
 
+Store.prototype.waitFor = function(stores) {
+  var ids = stores.map(store => store.dispatchToken);
+  Dispatcher.waitFor(ids);
+};
+
+// TODO implement other dispatcher functionality
+
 export default Store;
