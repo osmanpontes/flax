@@ -1,14 +1,6 @@
-import DispatchCreator from './DispatchCreator';
-
-function _createAction(type, func, spec) {
-  var action, scope = Object.assign(new DispatchCreator(type), spec);
-  action = func.bind(scope);
-  action.actionType = type;
-  return action;
-}
+import ActionFactory from './ActionFactory';
 
 var ActionCreator = function (spec) {
-  var func, funcName;
   for (var propName in spec) {
     if (!spec.hasOwnProperty(propName)) {
       continue;
@@ -16,13 +8,10 @@ var ActionCreator = function (spec) {
 
     switch (typeof spec[propName]) {
       case 'function':
-        funcName = propName;
-        func = spec[funcName];
-
-        this[funcName] = _createAction(`${spec.displayName}/${funcName}`, func, spec);
+        this[propName] = ActionFactory.createAction(spec, propName);
 
         // HACK
-        spec[funcName] = this[funcName];
+        spec[propName] = this[propName];
 
         break;
       default:
