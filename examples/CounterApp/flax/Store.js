@@ -1,5 +1,5 @@
 import Dispatcher from './Dispatcher';
-import FluxitEmitter from './FluxitEmitter';
+import FlaxEmitter from './FlaxEmitter';
 import StoreEvent from './StoreEvent';
 
 var _count = 0;
@@ -37,7 +37,7 @@ var Store = function (spec) {
   });
 };
 
-Store.prototype = new FluxitEmitter();
+Store.prototype = new FlaxEmitter();
 
 Store.prototype.waitFor = function (stores) {
   var ids = stores.map(store => store.dispatchToken);

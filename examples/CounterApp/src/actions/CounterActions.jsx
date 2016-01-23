@@ -1,6 +1,6 @@
-import {ActionCreator} from '../../fluxit';
+import flax from '../../flax';
 
-const CounterActions = new ActionCreator({
+const CounterActions = flax.createActionCreator({
   displayName: 'CounterActions',
 
   incX() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import CounterActions from '../actions/CounterActions.jsx';
 import CounterStore from '../stores/CounterStore.jsx';
-import {StoreWatcher} from '../../fluxit';
+import {StoreWatcher} from '../../flax';
 
 const App = React.createClass({
   mixins: [StoreWatcher],

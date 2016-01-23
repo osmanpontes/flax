@@ -1,11 +1,11 @@
-import {Store} from '../../fluxit';
+import flax from '../../flax';
 import CounterActions from '../actions/CounterActions.jsx';
 
 var _state = {
   x: 5
 };
 
-const CounterStore = new Store({
+const CounterStore = flax.createStore({
   displayName: 'CounterStore',
 
   getState() {
