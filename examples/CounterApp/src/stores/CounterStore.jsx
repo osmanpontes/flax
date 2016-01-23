@@ -16,7 +16,7 @@ const CounterStore = new Store({
     return [
       [CounterActions.incX, this._handleIncX],
       [CounterActions.decX, this._handleDecX]
-    ]
+    ];
   },
 
   events: {

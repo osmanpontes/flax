@@ -1,18 +1,9 @@
-import Dispatcher from './Dispatcher';
+import DispatchCreator from './DispatchCreator';
 
-function _createDispatchable(type) {
-  return {
-    dispatch(payload) {
-      // TODO ActionCreator displayName to make funcName belongs to ActionCreator
-      Dispatcher.dispatch({type, payload});
-    }
-  };
-}
-
-function _createAction(funcName, func, spec) {
-  var action, scope = Object.assign(_createDispatchable(funcName), spec);
+function _createAction(type, func, spec) {
+  var action, scope = Object.assign(new DispatchCreator(type), spec);
   action = func.bind(scope);
-  action.actionType = funcName;
+  action.actionType = type;
   return action;
 }
 
@@ -28,7 +19,7 @@ var ActionCreator = function (spec) {
         funcName = propName;
         func = spec[funcName];
 
-        this[funcName] = _createAction(funcName, func, spec);
+        this[funcName] = _createAction(`${spec.displayName}/${funcName}`, func, spec);
 
         // HACK
         spec[funcName] = this[funcName];
