@@ -1,6 +1,6 @@
 import Dispatcher from './Dispatcher';
 
-function createDispatchable(type) {
+function _createDispatchable(type) {
   return {
     dispatch(payload) {
       // TODO ActionCreator displayName to make funcName belongs to ActionCreator
@@ -9,8 +9,8 @@ function createDispatchable(type) {
   };
 }
 
-function createAction(funcName, func, spec) {
-  var action, scope = Object.assign(createDispatchable(funcName), spec);
+function _createAction(funcName, func, spec) {
+  var action, scope = Object.assign(_createDispatchable(funcName), spec);
   action = func.bind(scope);
   action.actionType = funcName;
   return action;
@@ -28,7 +28,7 @@ var ActionCreator = function (spec) {
         funcName = propName;
         func = spec[funcName];
 
-        this[funcName] = createAction(funcName, func, spec);
+        this[funcName] = _createAction(funcName, func, spec);
 
         // HACK
         spec[funcName] = this[funcName];
