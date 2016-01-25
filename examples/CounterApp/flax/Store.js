@@ -15,8 +15,6 @@ var Store = function (spec) {
     binds[action.actionType] = handler;
   });
 
-  // var self = this;
-
   // Register with dispatcher
   this.dispatchToken = Dispatcher.register(function (action) {
     var {type, payload} = action;
