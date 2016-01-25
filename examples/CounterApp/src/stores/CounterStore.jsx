@@ -1,4 +1,4 @@
-import flax from '../../flax';
+import flax from 'flax';
 import CounterActions from '../actions/CounterActions.jsx';
 
 var _state = {

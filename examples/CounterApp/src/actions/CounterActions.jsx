@@ -1,4 +1,4 @@
-import flax from '../../flax';
+import flax from 'flax';
 
 const CounterActions = flax.createActionCreator({
   displayName: 'CounterActions',
