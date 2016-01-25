@@ -24,8 +24,17 @@ const CounterStore = flax.createStore({
     DEC_X: null
   },
 
+  getters: {
+    getX() {
+      return _state.x;
+    }
+  },
+
   _handleIncX() {
     _state.x = _state.x > 9 ? 10 : _state.x + 1;
+
+    // var x = this.getX();
+    // _state.x = x > 9 ? 10 : x + 1;
 
     this.emitChange(this.INC_X);
     // this.emitChange(this.events.INC_X);
@@ -35,7 +44,6 @@ const CounterStore = flax.createStore({
     _state.x = _state.x < 1 ? 0 : _state.x - 1;
 
     this.emitChange(this.DEC_X.append(2));
-    // this.emitChange(this.events.DEC_X);
   }
 });
 

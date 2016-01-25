@@ -7,6 +7,23 @@ var _count = 0;
 var Store = function (spec) {
   this.displayName = spec.displayName;
 
+  // Get binds
+  var binds = {};
+  spec.getActionBinds().forEach(bind => {
+    var action = bind[0];
+    var handler = bind[1];
+    binds[action.actionType] = handler;
+  });
+
+  // var self = this;
+
+  // Register with dispatcher
+  this.dispatchToken = Dispatcher.register(function (action) {
+    var {type, payload} = action;
+
+    if (typeof binds[type] !== 'undefined') binds[type].call(this, payload);
+  }.bind(this));
+
   this.events = {};
   for (var eventName in spec.events) {
     if (!spec.events.hasOwnProperty(eventName)) {
@@ -18,23 +35,18 @@ var Store = function (spec) {
     this[eventName] = event;
   }
 
-  // TODO what happens when someone extends the Store class? Or: how to?
+  // Copy getters
+  this.getters = {};
+  for (var getterName in spec.getters) {
+    if (spec.getters.hasOwnProperty(getterName)) {
+      var getter = spec.getters[getterName];
+      this.getters[getterName] = getter;
+      this[getterName] = getter;
+    }
+  }
+
+  // Copy getState
   this.getState = spec.getState;
-
-  var binds = {};
-  spec.getActionBinds().forEach(bind => {
-    var action = bind[0];
-    var handler = bind[1];
-    binds[action.actionType] = handler;
-  });
-
-  var self = this;
-
-  this.dispatchToken = Dispatcher.register(function (action) {
-    var {type, payload} = action;
-
-    if (typeof binds[type] !== 'undefined') binds[type].call(self, payload);
-  });
 };
 
 Store.prototype = new FlaxEmitter();

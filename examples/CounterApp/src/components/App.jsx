@@ -15,7 +15,7 @@ const App = React.createClass({
 
   getInitialState() {
     return {
-      x: CounterStore.getState().x
+      x: CounterStore.getX()
     };
   },
 
@@ -41,7 +41,7 @@ const App = React.createClass({
   render() {
     return (
       <div style={{textAlign: 'center', fontSize: 30}}>
-        <h1>How cool is Fluxit?</h1>
+        <h1>How cool is Flax?</h1>
         <p style={{fontSize: 70}}>{this.state.x}</p>
         <button style={{fontSize: 50}} onClick={this._handlePlusClick}>+</button>
         <button style={{fontSize: 50}} onClick={this._handleMinusClick}>-</button>
