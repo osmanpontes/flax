@@ -1,7 +1,11 @@
 import React from 'react';
 import CounterActions from '../actions/CounterActions.jsx';
-import CounterStore from '../stores/CounterStore.jsx';
+import CounterStore from '../stores/CounterStore.js';
 import {StoreWatcher} from 'flax';
+
+// Components
+
+import TimeTravel from './TimeTravel.jsx';
 
 const App = React.createClass({
   mixins: [StoreWatcher],
@@ -47,6 +51,7 @@ const App = React.createClass({
         <button style={{fontSize: 50}} onClick={this._handleMinusClick}>-</button>
         <br/><br/>
         <button style={{fontSize: 70}} onClick={this._handleSendClick}>Send</button>
+        <TimeTravel />
       </div>
     );
   }

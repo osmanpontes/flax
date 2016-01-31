@@ -9,7 +9,7 @@ const StoreFactory = {
       // spec.displayName =
     }
 
-    if (typeof spec.getState !== 'function') {
+    if (typeof spec.getInitialState !== 'function') {
       // TODO
     }
 
@@ -41,8 +41,12 @@ const StoreFactory = {
       }
     }
 
+    // Copy state variable
+    storeFacade.state = store.state;
+
     // Copy getState
     storeFacade.getState = store.getState;
+
     return storeFacade;
   }
 };

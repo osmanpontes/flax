@@ -1,6 +1,7 @@
 import StoreWatcher from './StoreWatcher';
 import ActionCreatorFactory from './ActionCreatorFactory';
 import StoreFactory from './StoreFactory';
+import FlaxDispatcher from './FlaxDispatcher';
 import assign from 'object-assign';
 
 if (typeof Object.assign === 'undefined') {
@@ -11,6 +12,7 @@ var createActionCreator = ActionCreatorFactory.createActionCreator;
 var createStore = StoreFactory.createStore;
 
 export {
+  FlaxDispatcher,
   createActionCreator,
   createStore,
   StoreWatcher
