@@ -37,7 +37,6 @@ const TodoStore = Flax.createStore({
     },
 
     getAll() {
-      console.log(this.state.todos);
       return this.state.todos;
     }
   },
