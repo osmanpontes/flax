@@ -1,11 +1,21 @@
+// npm
 import React from 'react';
+import ReactDOM from 'react-dom';
+
+// Actions
+
 import CounterActions from '../actions/CounterActions.jsx';
+
+// Stores
+
 import CounterStore from '../stores/CounterStore.js';
-import {StoreWatcher} from 'flax';
 
-// Components
+// Flax
 
-import TimeTravel from './TimeTravel.jsx';
+import {
+  StoreWatcher,
+  FlaxController
+} from 'flax';
 
 const App = React.createClass({
   mixins: [StoreWatcher],
@@ -42,6 +52,11 @@ const App = React.createClass({
 
   },
 
+  _reset() {
+    ReactDOM.unmountComponentAtNode(document.getElementById('app'));
+    ReactDOM.render(<App />, document.getElementById('app'));
+  },
+
   render() {
     return (
       <div style={{textAlign: 'center', fontSize: 30}}>
@@ -51,7 +66,7 @@ const App = React.createClass({
         <button style={{fontSize: 50}} onClick={this._handleMinusClick}>-</button>
         <br/><br/>
         <button style={{fontSize: 70}} onClick={this._handleSendClick}>Send</button>
-        <TimeTravel />
+        <FlaxController reset={this._reset}/>
       </div>
     );
   }

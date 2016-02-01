@@ -37,9 +37,17 @@ var Store = function (spec) {
   this.getters = {};
   for (var getterName in spec.getters) {
     if (spec.getters.hasOwnProperty(getterName)) {
-      var getter = spec.getters[getterName].bind(this);
+      var getter = spec.getters[getterName].bind(this); // TODO now getters have access to all properties?
       this.getters[getterName] = getter;
       this[getterName] = getter;
+    }
+  }
+
+  // TODO
+  for (var property in spec) {
+    if (spec.hasOwnProperty(property) && typeof spec[property] === 'function') {
+      var helper = spec[property].bind(this);
+      this[property] = helper;
     }
   }
 
@@ -52,11 +60,11 @@ var Store = function (spec) {
 
 Store.prototype = new FlaxEmitter();
 
-Store.prototype.getState = function() {
+Store.prototype.getState = function () {
   return this.state;
 };
 
-Store.prototype.resetState = function() {
+Store.prototype.resetState = function () {
   // this.state = this.getInitialState();
   Object.assign(this.state, this.getInitialState());
 };

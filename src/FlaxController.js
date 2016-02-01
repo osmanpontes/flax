@@ -1,15 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// Stores
+import FlaxDispatcher from './FlaxDispatcher';
 
-import CounterStore from '../stores/CounterStore.js';
-
-import App from './App.jsx';
-
-import {FlaxDispatcher} from 'flax';
-
-const TimeTravel = React.createClass({
+const FlaxController = React.createClass({
   getInitialState() {
     var actionHistory = FlaxDispatcher.getActionHistory();
     return {
@@ -19,7 +13,7 @@ const TimeTravel = React.createClass({
   },
 
   _handleActionDispatch() {
-    FlaxDispatcher.rollback();
+    //FlaxDispatcher.rollback();
     var actionHistory = FlaxDispatcher.getActionHistory();
     this.setState({
       actions: actionHistory,
@@ -48,8 +42,9 @@ const TimeTravel = React.createClass({
     FlaxDispatcher.playActionsUntilIndex(index);
 
     if (index === 0) {
-      ReactDOM.unmountComponentAtNode(document.getElementById('app'));
-      ReactDOM.render(<App />, document.getElementById('app'));
+      this.props.reset();
+      /*ReactDOM.unmountComponentAtNode(document.getElementById('app'));
+      ReactDOM.render(<App />, document.getElementById('app'));*/
     }
   },
 
@@ -71,10 +66,10 @@ const TimeTravel = React.createClass({
         <ul>
           {actionList}
         </ul>
-        <button onClick={this._handleRollback}>ROLLBACK</button>
+        <button onClick={this._handleRollback}>Rollback</button>
       </div>
     );
   }
 });
 
-export default TimeTravel;
+export default FlaxController;
