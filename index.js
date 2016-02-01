@@ -1,6 +1,6 @@
-import StoreWatcher from './StoreWatcher';
-import ActionCreatorFactory from './ActionCreatorFactory';
-import StoreFactory from './StoreFactory';
+import StoreWatcher from './src/StoreWatcher';
+import ActionCreatorFactory from './src/ActionCreatorFactory';
+import StoreFactory from './src/StoreFactory';
 import assign from 'object-assign';
 
 if (typeof Object.assign === 'undefined') {
