@@ -1,9 +1,11 @@
 {
-  "name": "todo-flax",
-  "version": "0.0.3",
-  "description": "Example Flux architecture.",
-  "repository": "https://github.com/facebook/flux",
+  "name": "flax-todo",
+  "version": "0.0.0",
+  "description": "Flax - Todo Example",
   "main": "src/app.js",
+  "repository": "https://github.com/osmanpontes/flax",
+  "author": "Samuel Timbó <samuelmtimbo@gmail.com>",
+  "contributors": ["Osman Pontes <osmanpontes@gmail.com>"],
   "dependencies": {
     "classnames": "^2.1.3",
     "object-assign": "^4.0.1",
@@ -16,13 +18,14 @@
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
-    "watchify": "^3.7.0"
+    "watchify": "^3.7.0",
+    "envify": "3.4.0"
   },
   "scripts": {
-    "start": "watchify -o build/bundle.js -v -d src/app.js",
-    "build": "browserify . -t [envify --NODE_ENV production] > build/bundle.min.js"
+    "start": "watchify -x react -x react-dom src/app.js -o build/app.js -v -d",
+    "vendor": "browserify -r react -r react-dom > build/vendor.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Samuel Timbó",
   "browserify": {
     "transform": [
       [

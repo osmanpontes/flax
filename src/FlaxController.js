@@ -13,8 +13,12 @@ const FlaxController = React.createClass({
   },
 
   _handleActionDispatch() {
-    //FlaxDispatcher.rollback();
+    // Get back to last state every time a new action is fired
+    FlaxDispatcher.rollback();
+
+    // Get action history
     var actionHistory = FlaxDispatcher.getActionHistory();
+
     this.setState({
       actions: actionHistory,
       index: actionHistory.length

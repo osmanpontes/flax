@@ -12,4 +12,6 @@ function resetApp() {
 
 resetApp();
 
-ReactDOM.render(<FlaxController reset={resetApp}/>, document.getElementById('flax'));
+if (process.env.NODE_ENV !== "production") {
+  ReactDOM.render(<FlaxController reset={resetApp}/>, document.getElementById('flax'));
+}

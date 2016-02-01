@@ -13,8 +13,7 @@ import CounterStore from '../stores/CounterStore.js';
 // Flax
 
 import {
-  StoreWatcher,
-  FlaxController
+  StoreWatcher
 } from 'flax';
 
 const App = React.createClass({
@@ -66,7 +65,6 @@ const App = React.createClass({
         <button style={{fontSize: 50}} onClick={this._handleMinusClick}>-</button>
         <br/><br/>
         <button style={{fontSize: 70}} onClick={this._handleSendClick}>Send</button>
-        <FlaxController reset={this._reset}/>
       </div>
     );
   }
