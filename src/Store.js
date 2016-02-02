@@ -1,4 +1,4 @@
-import Dispatcher from './Dispatcher';
+import FlaxDispatcher from './FlaxDispatcher';
 import FlaxEmitter from './FlaxEmitter';
 import StoreEvent from './StoreEvent';
 
@@ -16,7 +16,7 @@ var Store = function (spec) {
   });
 
   // Register with dispatcher
-  this.dispatchToken = Dispatcher.register(function (action) {
+  this.dispatchToken = FlaxDispatcher.register(this, function (action) {
     var {type, payload} = action;
 
     if (typeof binds[type] !== 'undefined') binds[type].call(this, payload);
@@ -37,21 +37,41 @@ var Store = function (spec) {
   this.getters = {};
   for (var getterName in spec.getters) {
     if (spec.getters.hasOwnProperty(getterName)) {
-      var getter = spec.getters[getterName];
+      var getter = spec.getters[getterName].bind(this); // TODO now getters have access to all properties?
       this.getters[getterName] = getter;
       this[getterName] = getter;
     }
   }
 
-  // Copy getState
-  this.getState = spec.getState;
+  // TODO
+  for (var property in spec) {
+    if (spec.hasOwnProperty(property) && typeof spec[property] === 'function') {
+      var helper = spec[property].bind(this);
+      this[property] = helper;
+    }
+  }
+
+  // Copy getInitialState function
+  this.getInitialState = spec.getInitialState;
+
+  // Set state to initial
+  this.state = spec.getInitialState();
 };
 
 Store.prototype = new FlaxEmitter();
 
+Store.prototype.getState = function () {
+  return this.state;
+};
+
+Store.prototype.resetState = function () {
+  // this.state = this.getInitialState();
+  Object.assign(this.state, this.getInitialState());
+};
+
 Store.prototype.waitFor = function (stores) {
   var ids = stores.map(store => store.dispatchToken);
-  Dispatcher.waitFor(ids);
+  FlaxDispatcher.waitFor(ids);
 };
 
 // TODO implement other dispatcher functionality

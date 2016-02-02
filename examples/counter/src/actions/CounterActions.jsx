@@ -1,6 +1,6 @@
-import flax from 'flax';
+import Flax from 'flax';
 
-const CounterActions = flax.createActionCreator({
+const CounterActions = Flax.createActionCreator({
   displayName: 'CounterActions',
 
   incX() {

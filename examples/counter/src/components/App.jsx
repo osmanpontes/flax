@@ -1,7 +1,20 @@
+// npm
 import React from 'react';
+import ReactDOM from 'react-dom';
+
+// Actions
+
 import CounterActions from '../actions/CounterActions.jsx';
-import CounterStore from '../stores/CounterStore.jsx';
-import {StoreWatcher} from 'flax';
+
+// Stores
+
+import CounterStore from '../stores/CounterStore.js';
+
+// Flax
+
+import {
+  StoreWatcher
+} from 'flax';
 
 const App = React.createClass({
   mixins: [StoreWatcher],
@@ -36,6 +49,11 @@ const App = React.createClass({
 
   _handleSendClick() {
 
+  },
+
+  _reset() {
+    ReactDOM.unmountComponentAtNode(document.getElementById('app'));
+    ReactDOM.render(<App />, document.getElementById('app'));
   },
 
   render() {
