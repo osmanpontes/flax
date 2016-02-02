@@ -4,10 +4,10 @@ import CounterActions from '../actions/CounterActions.jsx';
 const CounterStore = Flax.createStore({
   displayName: 'CounterStore',
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       x: 5
-    }
+    };
   },
 
   getActionBinds() {
