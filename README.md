@@ -11,11 +11,11 @@ First of all:
 
 Install Flax dependencies and create a npm link: 
 
-* In terminal run `cd src/ && npm install && npm link && cd ..`
+* In terminal run `npm install && npm link`
 
 Go to example project folder:
 
-* In terminal run `cd examples/CounterApp/`
+* In terminal run `cd examples/counter/`
 
 Install example project dependencies and link to flax:
 

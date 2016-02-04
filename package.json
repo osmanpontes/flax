@@ -11,6 +11,7 @@
   ],
   "repository": "https://github.com/osmanpontes/flax",
   "author": "Osman Pontes <osmanpontes@gmail.com>",
+  "contributors": ["Samuel Timbó <samuelmtimbo@gmail.com>"],
   "license": "ISC",
   "dependencies": {
     "flux": "^2.1.1"
@@ -19,7 +20,8 @@
     "babel-plugin-transform-object-assign": "^6.3.13",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
-    "babelify": "^7.2.0"
+    "babelify": "^7.2.0",
+    "envify": "^3.4.0"
   },
   "browserify": {
     "transform": [

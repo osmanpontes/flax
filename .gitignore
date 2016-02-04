@@ -37,6 +37,7 @@ node_modules
 
 # Project
 build
+!.gitkeep
 
 # art
 art

@@ -1,15 +1,16 @@
 {
-  "name": "fluxit",
+  "name": "flax-counter",
   "version": "0.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "Flax - Counter Example",
+  "main": "src/app.js",
   "scripts": {
     "start": "watchify -x react -x react-dom src/app.js -o build/app.js -v -d",
     "vendor": "browserify -r react -r react-dom > build/vendor.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["flux", "flax", "react", "counter"],
+  "repository": "https://github.com/osmanpontes/flax",
+  "author": "Samuel Timbó <samuelmtimbo@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "react": "^0.14.6",
@@ -21,7 +22,8 @@
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
-    "watchify": "^3.7.0"
+    "watchify": "^3.7.0",
+    "envify": "3.4.0"
   },
   "browserify": {
     "transform": [

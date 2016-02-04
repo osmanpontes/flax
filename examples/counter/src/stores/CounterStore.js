@@ -1,15 +1,13 @@
-import flax from 'flax';
+import Flax from 'flax';
 import CounterActions from '../actions/CounterActions.jsx';
 
-var _state = {
-  x: 5
-};
-
-const CounterStore = flax.createStore({
+const CounterStore = Flax.createStore({
   displayName: 'CounterStore',
 
-  getState() {
-    return _state;
+  getInitialState() {
+    return {
+      x: 5
+    };
   },
 
   getActionBinds() {
@@ -26,22 +24,19 @@ const CounterStore = flax.createStore({
 
   getters: {
     getX() {
-      return _state.x;
+      return this.state.x;
     }
   },
 
   _handleIncX() {
-    _state.x = _state.x > 9 ? 10 : _state.x + 1;
-
-    // var x = this.getX();
-    // _state.x = x > 9 ? 10 : x + 1;
+    this.state.x = this.state.x > 9 ? 10 : this.state.x + 1;
 
     this.emitChange(this.INC_X);
     // this.emitChange(this.events.INC_X);
   },
 
   _handleDecX() {
-    _state.x = _state.x < 1 ? 0 : _state.x - 1;
+    this.state.x = this.state.x < 1 ? 0 : this.state.x - 1;
 
     this.emitChange(this.DEC_X.append(2));
   }
