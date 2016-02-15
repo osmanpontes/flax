@@ -1,82 +1,87 @@
 import {Dispatcher} from 'flux';
 import EventEmitter from 'events';
 
-const _dispatcher = new Dispatcher();
+import Environment from './environment';
 
-const _registeredStores = [];
-const _actionHistory = [];
+let FlaxDispatcher = Dispatcher;
 
-const FlaxDispatcher = function () {
-};
+if (!Environment.isProduction) {
+  const _dispatcher = new Dispatcher();
 
-FlaxDispatcher.DISPATCH = "DISPATCH";
+  const _registeredStores = [];
+  const _actionHistory = [];
 
-FlaxDispatcher.prototype = new EventEmitter();
+  FlaxDispatcher = function () {};
 
-FlaxDispatcher.prototype.register = function (store, callback) {
-  _registeredStores.push(store);
+  FlaxDispatcher.DISPATCH = "DISPATCH";
 
-  return _dispatcher.register(callback);
-};
+  FlaxDispatcher.prototype = new EventEmitter();
 
-FlaxDispatcher.prototype.unregister = function (id) {
-  _dispatcher.unregister(id);
-};
+  FlaxDispatcher.prototype.register = function (callback, store) {
+    _registeredStores.push(store);
 
-FlaxDispatcher.prototype.waitFor = function (ids) {
-  _dispatcher.waitFor(ids);
-};
+    return _dispatcher.register(callback);
+  };
 
-FlaxDispatcher.prototype.dispatch = function (payload) {
-  _actionHistory.push(payload);
+  FlaxDispatcher.prototype.unregister = function (id) {
+    _dispatcher.unregister(id);
+  };
 
-  _dispatcher.dispatch(payload);
+  FlaxDispatcher.prototype.waitFor = function (ids) {
+    _dispatcher.waitFor(ids);
+  };
 
-  this.emit(this.DISPATCH);
-};
+  FlaxDispatcher.prototype.dispatch = function (payload) {
+    _actionHistory.push(payload);
 
-FlaxDispatcher.prototype.isDispatching = function () {
-  return _dispatcher.isDispatching();
-};
-
-FlaxDispatcher.prototype.getActionHistory = function () {
-  return _actionHistory;
-};
-
-FlaxDispatcher.prototype.resetAllStores = function () {
-  _registeredStores.forEach((store) => {
-    // TODO remove this method?
-    store.resetState();
-  });
-};
-
-FlaxDispatcher.prototype.playActions = function(payloads, index) {
-  if (typeof index !== 'undefined') {
-    for (var i = 0; i <= index; i++) {
-      _dispatcher.dispatch(payloads[i]);
-    }
-    return;
-  }
-
-  payloads.forEach((payload) => {
     _dispatcher.dispatch(payload);
-  });
-};
 
-FlaxDispatcher.prototype.playActionsUntilIndex = function(index) {
-  this.resetAllStores();
+    this.emit(this.DISPATCH);
+  };
 
-  if (typeof index !== 'undefined') {
-    for (var i = 0; i < index; i++) {
-      _dispatcher.dispatch(_actionHistory[i]);
+  FlaxDispatcher.prototype.isDispatching = function () {
+    return _dispatcher.isDispatching();
+  };
+
+  FlaxDispatcher.prototype.getActionHistory = function () {
+    return _actionHistory;
+  };
+
+  FlaxDispatcher.prototype.resetAllStores = function () {
+    _registeredStores.forEach((store) => {
+      // TODO remove this method?
+      store.resetState();
+    });
+  };
+
+  FlaxDispatcher.prototype.playActions = function(payloads, index) {
+    if (typeof index !== 'undefined') {
+      for (var i = 0; i <= index; i++) {
+        _dispatcher.dispatch(payloads[i]);
+      }
+      return;
     }
-  }
-};
 
-FlaxDispatcher.prototype.rollback = function() {
-  this.resetAllStores();
+    payloads.forEach((payload) => {
+      _dispatcher.dispatch(payload);
+    });
+  };
 
-  this.playActions(_actionHistory);
-};
+  FlaxDispatcher.prototype.playActionsUntilIndex = function(index) {
+    this.resetAllStores();
+
+    if (typeof index !== 'undefined') {
+      for (var i = 0; i < index; i++) {
+        _dispatcher.dispatch(_actionHistory[i]);
+      }
+    }
+  };
+
+  FlaxDispatcher.prototype.rollback = function() {
+    this.resetAllStores();
+
+    this.playActions(_actionHistory);
+  };
+}
 
 export default new FlaxDispatcher();
