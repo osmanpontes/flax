@@ -29,6 +29,8 @@ const CounterStore = Flax.createStore({
   },
 
   _handleIncX() {
+    var x = 1;
+
     this.state.x = this.state.x > 9 ? 10 : this.state.x + 1;
 
     this.emitChange(this.INC_X);
