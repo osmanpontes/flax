@@ -38,6 +38,7 @@ node_modules
 # Project
 build
 !.gitkeep
+dist
 
 # art
 art

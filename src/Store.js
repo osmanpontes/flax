@@ -16,11 +16,11 @@ var Store = function (spec) {
   });
 
   // Register with dispatcher
-  this.dispatchToken = FlaxDispatcher.register(function (action) {
+  this.dispatchToken = FlaxDispatcher.register(this, function (action) {
     var {type, payload} = action;
 
     if (typeof binds[type] !== 'undefined') binds[type].call(this, payload);
-  }.bind(this), this);
+  }.bind(this));
 
   this.events = {};
   for (var eventName in spec.events) {

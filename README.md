@@ -32,3 +32,8 @@ Generate app.js bundle:
 ## License
 
 MIT
+
+## Contributors ##
+
+* [osmanpontes](https://github.com/osmanpontes)
+* [samuelmtimbo](https://github.com/samuelmtimbo)
