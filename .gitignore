@@ -38,7 +38,7 @@ node_modules
 # Project
 **/build/**
 !.gitkeep
-dist
+lib
 
 # art
 art

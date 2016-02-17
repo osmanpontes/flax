@@ -1,2 +1,5 @@
-examples/
 .idea
+/examples
+/src
+/index.js
+test

@@ -1,29 +1,45 @@
 {
   "name": "flax",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A flux implementation",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "babel --ignore *-test.js src --out-dir lib/src && babel index.js --out-file lib/index.js",
+    "prepublish": "npm run build",
     "test": "jest"
   },
   "keywords": [
-    "flux", "react"
+    "flux",
+    "react"
   ],
   "repository": "https://github.com/osmanpontes/flax",
   "author": "Osman Pontes <osmanpontes@gmail.com>",
-  "contributors": ["Samuel Timbó <samuelmtimbo@gmail.com>"],
-  "license": "ISC",
+  "contributors": [
+    "Samuel Timbó <samuelmtimbo@gmail.com>",
+    "Osman Pontes <osmanpontes@gmail.com>"
+  ],
+  "license": "MIT",
   "dependencies": {
     "flux": "^2.1.1"
   },
   "devDependencies": {
-    "jest-cli": "^0.8.2",
     "babel-jest": "^6.0.1",
     "babel-plugin-transform-object-assign": "^6.3.13",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
-    "envify": "^3.4.0"
+    "envify": "^3.4.0",
+    "jest-cli": "^0.8.2",
+    "rimraf": "^2.5.2"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ],
+    "plugins": [
+      "transform-object-assign"
+    ]
   },
   "browserify": {
     "transform": [
