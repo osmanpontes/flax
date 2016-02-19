@@ -5,6 +5,7 @@
   "main": "src/app.js",
   "repository": "https://github.com/osmanpontes/flax",
   "author": "Samuel Timbó <samuelmtimbo@gmail.com>",
+  "license": "BSD-3-Clause",
   "contributors": [
     "Osman Pontes <osmanpontes@gmail.com>"
   ],
@@ -25,7 +26,7 @@
     "watchify": "^3.7.0"
   },
   "scripts": {
-    "start": "watchify src/app.js -o build/app.js -v -d",
+    "start": "watchify src/app.js -u react -u react-dom -o build/app.js -v -d",
     "vendor": "browserify -r react -r react-dom > build/vendor.js",
     "production": "cross-env NODE_ENV=production browserify -x react -x react-dom src/app.js > build/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
