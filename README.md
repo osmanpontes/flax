@@ -2,14 +2,23 @@
 
 A productive flux implementation to be used with ReactJS
 
-Flax is based on ReactJS [Flux](https://facebook.github.io/flux/docs/overview.html)
+Flax is based on [Flux](https://facebook.github.io/flux/docs/overview.html)
 
 ## Goals
 
-* Objectivity and clarity
-* Maintain as much freedom as ReactJS Flux
-* Productivity
-* Common flux problems proposal solution
+* Productivity, objectivity and clarity
+* Maintain as much freedom as traditional Flux
+* Common flux problems solution proposals
+
+## Why Flax?
+ 
+ Flax is being developed to address professional level challenges with:
+
+* Clarity: Flax lets you write Flux in a similar way you would write an app with ReactJS, making it intuitive to learn;
+* Productivity: Flax reduces the common boilerplate while not losing granularity such as the [publish-subscribe stores' pattern](https://facebook.github.io/flux/docs/todo-list.html#creating-stores), but still making simpler syntax possible;
+* Seamlessness: with Flax, for instance, there is little difference between sync and async actions, making action creators easy to implement without additional middleware;
+* Pattern-oriented: alongside with the [docs](https://github.com/osmanpontes/flax), this repository is being built to also show the best unidirectional dataflow practices and how to ensure them with Flax;
+* Developer tools: Flax is being designed to support the creation of user-defined development tools. See [flax-devtools](https://github.com/samuelmtimbo/flax-devtools), as an example;
 
 ## Usage
 
@@ -35,6 +44,10 @@ const AppActions = Flax.createActionCreator({
   },
   
   // Async action
+  
+  /*
+  *  We suggest all async requests to be done inside action creators as a form of keeping the stores sync
+  */
   action3(x) {
     this.dispatch({loading: true});
     fecth('<url>').then(response => {
@@ -52,10 +65,9 @@ const AppActions = Flax.createActionCreator({
       this.reject(); // action finished with failure
     });
   }
-
 });
 
-export default CounterActions;
+export default AppActions;
 ```
 
 ### Stores
@@ -156,10 +168,10 @@ const App = React.createClass({
 
   getEventBinds() {
     return [
-      [CounterStore.NUM1, this._handleNum1],
-      [CounterStore.NUM2, this._handleNum2],
-      [CounterStore.LOADING, this._handleLoading],
-      [CounterStore.ERROR, this._handleError]
+      [AppStore.NUM1, this._handleNum1],
+      [AppStore.NUM2, this._handleNum2],
+      [AppStore.LOADING, this._handleLoading],
+      [AppStore.ERROR, this._handleError]
     ];
   },
 
@@ -205,7 +217,7 @@ const App = React.createClass({
   },
 
   _handleAction3() {
-    // Action chaining is important to wait async action
+    // Action chaining is important to wait for async action
     AppActions.action3(10).then(() => {
       AppActions.action1();
       AppActions.action2(-1, -2);
@@ -238,12 +250,8 @@ getInitialState could be:
 
 ```js
 getInitialState() {
-  return {
-    num1: AppStore.getState().num1,
-    num2: AppStore.getState().num2,
-    loading: AppStore.getState().loading,
-    error: AppStore.getState().error
-  };
+  let {num1, num2, loading, error} = AppStore.getState();
+  return {num1, num2, loading, error};
 },
 ```
 
@@ -255,15 +263,12 @@ getInitialState() {
 },
 ```
 
-The getEventBinds could be:
+If you want less granularity, the component could be set to listen to all AppStore's events:
 
 ```js
 getEventBinds() {
   return [
-    [CounterStore.NUM1, this._handleChange],
-    [CounterStore.NUM2, this._handleChange],
-    [CounterStore.LOADING, this._handleChange],
-    [CounterStore.ERROR, this._handleChange]
+    [AppStore.DEFAULT, this._handleAppChange]
   ];
 },
 ```
