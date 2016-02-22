@@ -1,7 +1,7 @@
 {
   "name": "flax",
   "version": "0.1.1",
-  "description": "A flux implementation",
+  "description": "A productive flux implementation to be used with ReactJS",
   "main": "./lib/index.js",
   "scripts": {
     "start": "parallelshell \"npm run babel:src:watch\" \"npm run babel:index:watch\"",
@@ -12,6 +12,9 @@
     "prebuild": "rimraf lib",
     "build": "npm run babel:src && npm run babel:index",
     "prepublish": "npm run build",
+    "preversion": "npm test",
+    "version": "npm run build && git add --all dist",
+    "postversion": "git push && git push --tags",
     "test": "jest"
   },
   "keywords": [
