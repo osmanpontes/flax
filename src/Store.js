@@ -8,10 +8,13 @@ var Store = function (spec) {
   this.displayName = spec.displayName;
 
   // Get binds
-  var binds = {};
+  let binds = {};
   spec.getActionBinds().forEach(bind => {
-    var action = bind[0];
-    var handler = bind[1];
+    let action = bind[0];
+    let handler = function (payload) {
+      bind[1].call(this, payload);
+      this.emitChange(this.DEFAULT);
+    };
     binds[action.actionType] = handler;
   });
 
@@ -23,30 +26,26 @@ var Store = function (spec) {
   }.bind(this), this);
 
   this.events = {};
-  for (var eventName in spec.events) {
-    if (!spec.events.hasOwnProperty(eventName)) {
-      continue;
-    }
-    var event = new StoreEvent(_count++, eventName, this);
-
+  for (let eventName in Object.assign({DEFAULT: null}, spec.events)) {
+    let event = new StoreEvent(_count++, eventName, this);
     this.events[eventName] = event;
     this[eventName] = event;
   }
 
   // Copy getters
   this.getters = {};
-  for (var getterName in spec.getters) {
+  for (let getterName in spec.getters) {
     if (spec.getters.hasOwnProperty(getterName)) {
-      var getter = spec.getters[getterName].bind(this); // TODO now getters have access to all properties?
+      let getter = spec.getters[getterName].bind(this); // TODO now getters have access to all properties?
       this.getters[getterName] = getter;
       this[getterName] = getter;
     }
   }
 
   // TODO
-  for (var property in spec) {
+  for (let property in spec) {
     if (spec.hasOwnProperty(property) && typeof spec[property] === 'function') {
-      var helper = spec[property].bind(this);
+      let helper = spec[property].bind(this);
       this[property] = helper;
     }
   }
@@ -70,7 +69,7 @@ Store.prototype.resetState = function () {
 };
 
 Store.prototype.waitFor = function (stores) {
-  var ids = stores.map(store => store.dispatchToken);
+  let ids = stores.map(store => store.dispatchToken);
   FlaxDispatcher.waitFor(ids);
 };
 
