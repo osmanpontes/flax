@@ -17,7 +17,7 @@ Flax is based on [Flux](https://facebook.github.io/flux/docs/overview.html)
 * Clarity: Flax lets you write Flux in a similar way you would write an app with ReactJS, making it intuitive to learn;
 * Productivity: Flax reduces the common boilerplate while not losing granularity such as the [publish-subscribe stores' pattern](https://facebook.github.io/flux/docs/todo-list.html#creating-stores), but still making simpler syntax possible;
 * Seamlessness: with Flax, for instance, there is little difference between sync and async actions, making action creators easy to implement without additional middleware;
-* Pattern-oriented: alongside with the [docs](https://github.com/osmanpontes/flax), this repository is being built to also show the best unidirectional dataflow practices and how to ensure them with Flax;
+* Pattern-oriented: alongside with the [docs](https://github.com/osmanpontes/flax), this repository is being built to also show the best unidirectional dataflow practices to be used with Flax;
 * Developer tools: Flax is being designed to support the creation of user-defined development tools. See [flax-devtools](https://github.com/samuelmtimbo/flax-devtools), as an example;
 
 ## Usage
@@ -276,7 +276,7 @@ getEventBinds() {
 And the store event handles:
 
 ```js
-_handleChange() {
+_handleAppChange() {
   this.setState(AppStore.getState());
 },
 ```
