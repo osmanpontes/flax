@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 
-var FlaxEmitter = function () {};
+const FlaxEmitter = function () {};
 FlaxEmitter.prototype = new EventEmitter();
 FlaxEmitter.prototype.emitChange = function(event) {
   this.emit(event.toString());

@@ -1,7 +1,7 @@
 import ActionFactory from './ActionFactory';
 
-var ActionCreator = function (spec) {
-  for (var propName in spec) {
+const ActionCreator = function (spec) {
+  for (let propName in spec) {
     if (!spec.hasOwnProperty(propName)) {
       continue;
     }
@@ -10,7 +10,6 @@ var ActionCreator = function (spec) {
       case 'function':
         this[propName] = ActionFactory.createAction(spec, propName);
 
-        // HACK
         spec[propName] = this[propName];
 
         break;

@@ -2,13 +2,11 @@ import DispatchCreator from './DispatchCreator';
 
 const ActionFactory = {
   createAction(spec, funcName) {
-    var action,
-      type = `${spec.displayName}/${funcName}`,
-      scope = Object.assign(new DispatchCreator(type), spec);
+    let type = `${spec.displayName}/${funcName}`;
 
-    action = function () {
+    let action = function () {
       return new Promise((resolve, reject) => {
-        this.apply(Object.assign(scope, {resolve, reject}), arguments);
+        this.apply(Object.assign(new DispatchCreator(type), spec, {resolve, reject}), arguments);
       });
     }.bind(spec[funcName]);
     action.actionType = type;

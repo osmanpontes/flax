@@ -56,7 +56,7 @@ if (!Environment.isProduction) {
 
   FlaxDispatcher.prototype.playActions = function(payloads, index) {
     if (typeof index !== 'undefined') {
-      for (var i = 0; i <= index; i++) {
+      for (let i = 0; i <= index; i++) {
         _dispatcher.dispatch(payloads[i]);
       }
       return;
@@ -71,7 +71,7 @@ if (!Environment.isProduction) {
     this.resetAllStores();
 
     if (typeof index !== 'undefined') {
-      for (var i = 0; i < index; i++) {
+      for (let i = 0; i < index; i++) {
         _dispatcher.dispatch(_actionHistory[i]);
       }
     }

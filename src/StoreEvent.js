@@ -1,4 +1,4 @@
-var StoreEvent = function (id, name, store) {
+let StoreEvent = function (id, name, store) {
   this.id = id;
   this.name = name;
   this.store = store;

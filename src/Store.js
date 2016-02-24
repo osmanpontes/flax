@@ -2,9 +2,9 @@ import FlaxDispatcher from './FlaxDispatcher';
 import FlaxEmitter from './FlaxEmitter';
 import StoreEvent from './StoreEvent';
 
-var _count = 0;
+let _count = 0;
 
-var Store = function (spec) {
+const Store = function (spec) {
   this.displayName = spec.displayName;
 
   // Get binds
@@ -20,7 +20,7 @@ var Store = function (spec) {
 
   // Register with dispatcher
   this.dispatchToken = FlaxDispatcher.register(function (action) {
-    var {type, payload} = action;
+    let {type, payload} = action;
 
     if (typeof binds[type] !== 'undefined') binds[type].call(this, payload);
   }.bind(this), this);

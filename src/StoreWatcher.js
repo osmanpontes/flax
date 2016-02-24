@@ -1,20 +1,20 @@
 const StoreWatcher = {
   componentDidMount() {
-    var binds = this.getEventBinds();
+    let binds = this.getEventBinds();
 
     binds.forEach(bind => {
-      var event = bind[0];
-      var handler = bind[1];
+      let event = bind[0];
+      let handler = bind[1];
       event.store.addChangeListener(event, handler);
     });
   },
 
   componentWillUnmount() {
-    var binds = this.getEventBinds();
+    let binds = this.getEventBinds();
 
     binds.forEach(bind => {
-      var event = bind[0];
-      var handler = bind[1];
+      let event = bind[0];
+      let handler = bind[1];
 
       event.store.removeChangeListener(event, handler);
     });

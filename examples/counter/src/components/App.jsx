@@ -65,8 +65,6 @@ const App = React.createClass({
         <p style={{fontSize: 70}}>{this.state.x}</p>
         <button style={{fontSize: 50}} onClick={this._handlePlusClick}>+</button>
         <button style={{fontSize: 50}} onClick={this._handleMinusClick}>-</button>
-        <br/><br/>
-        <button style={{fontSize: 70}} onClick={this._handleSendClick}>Send</button>
       </div>
     );
   }
