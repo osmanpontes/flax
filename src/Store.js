@@ -7,14 +7,27 @@ let _count = 0;
 const Store = function (spec) {
   this.displayName = spec.displayName;
 
+  // Get events
+  this.events = {};
+  for (let eventName in Object.assign({DEFAULT: null}, spec.events)) {
+    let event = new StoreEvent(_count++, eventName, this);
+    this.events[eventName] = event;
+    this[eventName] = event;
+    spec.events[eventName] = event;
+    spec[eventName] = event;
+  }
+
   // Get binds
   let binds = {};
   spec.getActionBinds().forEach(bind => {
     let action = bind[0];
+    let defaultEvent = bind[2];
     let handler = function (payload) {
       bind[1].call(this, payload);
+      if (typeof defaultEvent !== 'undefined') this.emitChange(defaultEvent);
       this.emitChange(this.DEFAULT);
     };
+
     binds[action.actionType] = handler;
   });
 
@@ -24,13 +37,6 @@ const Store = function (spec) {
 
     if (typeof binds[type] !== 'undefined') binds[type].call(this, payload);
   }.bind(this), this);
-
-  this.events = {};
-  for (let eventName in Object.assign({DEFAULT: null}, spec.events)) {
-    let event = new StoreEvent(_count++, eventName, this);
-    this.events[eventName] = event;
-    this[eventName] = event;
-  }
 
   // Copy getters
   this.getters = {};

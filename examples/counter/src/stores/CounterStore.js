@@ -12,7 +12,7 @@ const CounterStore = Flax.createStore({
 
   getActionBinds() {
     return [
-      [CounterActions.incX, this._handleIncX],
+      [CounterActions.incX, this._handleIncX, this.INC_X],
       [CounterActions.decX, this._handleDecX]
     ];
   },
@@ -29,11 +29,9 @@ const CounterStore = Flax.createStore({
   },
 
   _handleIncX() {
-    var x = 1;
-
     this.state.x = this.state.x > 9 ? 10 : this.state.x + 1;
 
-    this.emitChange(this.INC_X);
+    // this.emitChange(this.INC_X); not necessary because it was defined on getActionBinds
     // this.emitChange(this.events.INC_X);
   },
 
