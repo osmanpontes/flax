@@ -47,6 +47,9 @@ const StoreFactory = {
     // Copy getState
     storeFacade.getState = store.getState;
 
+    // Copy dispatchToken to be used with waitFor
+    storeFacade.dispatchToken = store.dispatchToken;
+
     return storeFacade;
   }
 };

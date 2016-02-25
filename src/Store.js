@@ -75,7 +75,16 @@ Store.prototype.resetState = function () {
 };
 
 Store.prototype.waitFor = function (stores) {
-  let ids = stores.map(store => store.dispatchToken);
+  let ids = [];
+  if (Array.isArray(stores)) {
+    ids = stores.map(store => store.dispatchToken);
+  } else {
+    for (let i = 0; i < arguments.length; i++) {
+      let store = arguments[i];
+      ids.push(store.dispatchToken);
+    }
+  }
+
   FlaxDispatcher.waitFor(ids);
 };
 
