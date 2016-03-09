@@ -9,7 +9,7 @@ const Store = function (spec) {
 
   // Get events
   this.events = {};
-  for (let eventName in Object.assign({DEFAULT: null}, spec.events)) {
+  for (let eventName in Object.assign({DEFAULT: null, ANY: null}, spec.events)) {
     let event = new StoreEvent(_count++, eventName, this);
     this.events[eventName] = event;
     this[eventName] = event;
@@ -62,6 +62,7 @@ const Store = function (spec) {
   // Set state to initial
   this.state = spec.getInitialState();
 };
+
 
 Store.prototype = new FlaxEmitter();
 

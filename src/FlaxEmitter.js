@@ -4,6 +4,10 @@ const FlaxEmitter = function () {};
 FlaxEmitter.prototype = new EventEmitter();
 FlaxEmitter.prototype.emitChange = function(event) {
   this.emit(event.toString());
+
+  if (event !== event.store.events.DEFAULT) {
+    this.emit(event.store.events.ANY.toString());
+  }
 };
 FlaxEmitter.prototype.addChangeListener = function(event, handler) {
   this.on(event.toString(), handler);
