@@ -14,7 +14,7 @@ import ReactDOM from 'react-dom';
 
 // Mixins
 
-import {StoreWatcher} from '../../../../';
+import {StoreWatcher, StoreEventHandler} from '../../../../';
 
 // Stores
 
@@ -37,16 +37,8 @@ function getTodoState() {
 }
 
 var TodoApp = React.createClass({
-  mixins: [StoreWatcher],
-
   getInitialState: function() {
     return getTodoState();
-  },
-
-  getEventBinds() {
-    return [
-      [TodoStore.CHANGE_EVENT, this._onChange]
-    ];
   },
 
   /**
@@ -55,6 +47,7 @@ var TodoApp = React.createClass({
   render: function() {
     return (
       <div>
+        <StoreEventHandler event={TodoStore.CHANGE_EVENT} handler={this._onChange} />
         <Header />
         <MainSection
           allTodos={this.state.allTodos}
