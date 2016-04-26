@@ -10,17 +10,14 @@
 // npm
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-
-// Mixins
-
-import {StoreWatcher, StoreEventHandler} from '../../../../';
 
 // Stores
 
 import TodoStore from '../stores/TodoStore';
 
 // Components
+
+import {StoreEventHandler} from '../../../../';
 
 import Footer from './Footer.jsx';
 import Header from './Header.jsx';

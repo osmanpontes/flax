@@ -37,15 +37,6 @@ const App = React.createClass({
     CounterActions.decX();
   },
 
-  _handleSendClick() {
-
-  },
-
-  _reset() {
-    ReactDOM.unmountComponentAtNode(document.getElementById('app'));
-    ReactDOM.render(<App />, document.getElementById('app'));
-  },
-
   render() {
     return (
       <div>
