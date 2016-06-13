@@ -1,6 +1,6 @@
 {
   "name": "flax",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A productive flux implementation to be used with ReactJS",
   "main": "./lib/index.js",
   "scripts": {
