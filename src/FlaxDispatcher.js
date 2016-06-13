@@ -8,8 +8,9 @@ let FlaxDispatcher = Dispatcher;
 if (!Environment.isProduction) {
   const _dispatcher = new Dispatcher();
 
-  const _registeredStores = [];
-  const _actionHistory = [];
+  let _registeredStores = [];
+  let _actionHistory = [];
+  let _active = true;
 
   FlaxDispatcher = function () {};
 
@@ -32,6 +33,8 @@ if (!Environment.isProduction) {
   };
 
   FlaxDispatcher.prototype.dispatch = function (payload) {
+    if (!_active) return;
+
     _actionHistory.push(payload);
 
     _dispatcher.dispatch(payload);
@@ -49,13 +52,14 @@ if (!Environment.isProduction) {
 
   FlaxDispatcher.prototype.resetAllStores = function () {
     _registeredStores.forEach((store) => {
-      // TODO remove this method?
       store.resetState();
     });
   };
 
   FlaxDispatcher.prototype.playActions = function(payloads, index) {
-    if (typeof index !== 'undefined') {
+    this.resetAllStores();
+
+    if (typeof index !== 'undefined') { 
       for (let i = 0; i <= index; i++) {
         _dispatcher.dispatch(payloads[i]);
       }
@@ -68,19 +72,39 @@ if (!Environment.isProduction) {
   };
 
   FlaxDispatcher.prototype.playActionsUntilIndex = function(index) {
-    this.resetAllStores();
-
-    if (typeof index !== 'undefined') {
-      for (let i = 0; i < index; i++) {
-        _dispatcher.dispatch(_actionHistory[i]);
-      }
-    }
+    this.playActions(_actionHistory, index);
   };
 
   FlaxDispatcher.prototype.rollback = function() {
     this.resetAllStores();
 
     this.playActions(_actionHistory);
+  };
+
+  FlaxDispatcher.prototype.getRegisteredStores = function () {
+    return _registeredStores;
+  };
+
+  FlaxDispatcher.prototype.getActionHistory = function () {
+    return _actionHistory;
+  };
+
+  FlaxDispatcher.prototype.setActionHistory = function (actionHistory) {
+    _actionHistory = actionHistory;
+
+    this.playActions(_actionHistory);
+  };
+
+  FlaxDispatcher.prototype.setActive = function (active) {
+    _active = active;
+  };
+
+  FlaxDispatcher.prototype.isActive = function () {
+    return _active;
+  };
+
+  FlaxDispatcher.prototype.toggleActive = function () {
+    _active = !_active;
   };
 }
 

@@ -2,13 +2,15 @@ import StoreWatcher from './src/StoreWatcher';
 import StoreEventHandler from './src/StoreEventHandler.js';
 import ActionCreatorFactory from './src/ActionCreatorFactory';
 import StoreFactory from './src/StoreFactory';
+import FlaxDispatcher from './src/FlaxDispatcher'
 
-var createActionCreator = ActionCreatorFactory.createActionCreator;
-var createStore = StoreFactory.createStore;
+const createActionCreator = ActionCreatorFactory.createActionCreator;
+const createStore = StoreFactory.createStore;
 
 export {
   createActionCreator,
   createStore,
+  FlaxDispatcher,
   StoreWatcher,
   StoreEventHandler
 };
@@ -16,6 +18,7 @@ export {
 const Flax = {
   createActionCreator,
   createStore,
+  FlaxDispatcher,
   StoreWatcher,
   StoreEventHandler
 };
